@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href ="/stylesheets/add.css">
+    <link rel="stylesheet" href= '/stylesheets/style.css'>
+
+</head>
+<body class="dashboard">
+  <div>
+    <div class="header">
+     <div class="container">
+      <div class="navbar">
+      <div class="logo">
+        <h1>Reaso </h1>
+      </div> 
+        <nav>
+          <a href="/admin/list" class="nav-link">List foods</a>
+        </nav>
+      </div>
+     </div>
+    <div class="add">
+
+        <form class="flex-col" action="<%= url %>/api/food/add" method="POST" enctype="multipart/form-data">
+          <div class="add-img-upload flex-col">
+
+            <p>Upload Image</p>
+            <label for="image" style="cursor: pointer;">
+              <img id="preview" src="/assets/upload_area.png" alt="Upload Area" style="width: 200px; height: auto;" />
+            </label>
+            <input onchange="previewImage(event)" type="file" id="image" name="image" hidden required />
+          </div>
+            <div class="add-product-name flex-col">
+                <p>Product Name</p>
+                <input type="text" name="name" placeholder="Type here" value="<%= data.name %>" required>
+            </div>
+            <div class="add-product-description flex-col">
+                <p>Product description</p>
+                <textarea name="description" rows="6" placeholder="Write Content here" required><%= data.description %></textarea>
+            </div>
+            <div class="add-category-price">
+                <div class="add-category flex-col">
+                    <p>Product category</p>
+                    <select name="category">
+                        <option value="Salad" <%= data.category === 'Salad' ? 'selected' : '' %>>Salad</option>
+                        <option value="Rolls" <%= data.category === 'Rolls' ? 'selected' : '' %>>Rolls</option>
+                        <option value="Desserts" <%= data.category === 'Desserts' ? 'selected' : '' %>>Desserts</option>
+                        <option value="Sandwich" <%= data.category === 'Sandwich' ? 'selected' : '' %>>Sandwich</option>
+                        <option value="Cake" <%= data.category === 'Cake' ? 'selected' : '' %>>Cake</option>
+                        <option value="Pure Veg" <%= data.category === 'Pure Veg' ? 'selected' : '' %>>Pure Veg</option>
+                        <option value="Pasta" <%= data.category === 'Pasta' ? 'selected' : '' %>>Pasta</option>
+                        <option value="Noodles" <%= data.category === 'Noodles' ? 'selected' : '' %>>Noodles</option>
+                    </select>
+                </div>
+                <div class="add-price flex-col">
+                    <p>Product price</p>
+                    <input type="number" name="price" placeholder="$20" value="<%= data.price %>">
+                </div>
+            </div>
+            <button type="submit" class="add-btn">ADD</button>
+        </form>
+    </div>
+
+    <script>
+      function previewImage(event) {
+        const output = document.getElementById('preview');
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+    </script>
+</body>
+</html>

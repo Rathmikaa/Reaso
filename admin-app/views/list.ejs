@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Foods List</title>
+  <link rel="stylesheet" href="/stylesheets/list.css">
+  <link rel="stylesheet" href= '/stylesheets/style.css'>
+
+</head>
+<body>
+</head>
+<body class="dashboard">
+  <div>
+    <div class="header">
+     <div class="container">
+      <div class="navbar">
+      <div class="logo">
+        <h1>Reaso </h1>
+      </div> 
+        <nav>
+          <a href="/admin/add" class="nav-link">Add foods</a>
+        </nav>
+      </div>
+     </div>
+  <div class="list add flex-col">
+    <p>All Foods List</p>
+    <div class="list-table">
+      <div class="list-table-format title">
+        <b>Image</b>
+        <b>Name</b>
+        <b>Category</b>
+        <b>Price</b>
+        <b>Action</b>
+      </div>
+      <% if (list && list.length > 0) { %>
+        <% list.forEach((item, index) => { %>
+          <div class="list-table-format">
+            <img src="<%= url %>/images/<%= item.image %>" alt="" />
+            <p><%= item.name %></p>
+            <p><%= item.category %></p>
+            <p>$<%= item.price %></p>
+            <form action="<%= url %>/api/food/remove" method="POST" style="margin: 0;">
+              <input type="hidden" name="id" value="<%= item._id %>">
+              <button type="submit" class="cursor" style="border: none; background: transparent;">X</button>
+            </form>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>No food items available.</p>
+      <% } %>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!-- views/orders.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Page</title>
+  <link rel="stylesheet" href="/path/to/Orders.css">
+</head>
+<body>
+  <div class="order add">
+    <h3>Order Page</h3>
+    <div class="order-list">
+      <% orders.forEach((order, index) => { %>
+        <div class="order-item">
+          <img src="<%= assets.parcel_icon %>" alt="">
+          <div>
+            <p class="order-item-food">
+              <% order.items.forEach((item, i) => { %>
+                <%= item.name %> x <%= item.quantity %><%= i !== order.items.length - 1 ? ', ' : '' %>
+              <% }) %>
+            </p>
+            <p class="order-item-name">
+              <%= order.address.firstName %> <%= order.address.lastName %>
+            </p>
+            <div class="order-item-address">
+              <p><%= order.address.street %>,</p>
+              <p><%= order.address.city %>, <%= order.address.state %>, <%= order.address.country %>, <%= order.address.zipcode %></p>
+            </div>
+            <p class="order-item-phone"><%= order.address.phone %></p>
+          </div>
+          <p>Items: <%= order.items.length %></p>
+          <p>$<%= order.amount %></p>
+          <form action="/api/order/status" method="POST">
+            <input type="hidden" name="orderId" value="<%= order._id %>">
+            <select name="status" onchange="this.form.submit()">
+              <option value="Food Processing" <%= order.status === 'Food Processing' ? 'selected' : '' %>>Food Processing</option>
+              <option value="Out for delivery" <%= order.status === 'Out for delivery' ? 'selected' : '' %>>Out for delivery</option>
+              <option value="Delivered" <%= order.status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+            </select>
+          </form>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</body>
+</html>
